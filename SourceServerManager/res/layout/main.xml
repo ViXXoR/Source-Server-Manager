@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="1">
+
+    <!--<TableRow>
+        <TextView
+			android:id="@+id/serverIPLbl"
+			android:text="Server IP:"
+			android:textSize="18sp"
+            android:padding="3dip" />
+        <EditText
+        	android:id="@+id/serverIP"
+        	android:layout_column="1"
+        	android:layout_height="38px"
+        	android:layout_width="fill_parent"
+        	android:gravity="left"
+			android:text=""
+			android:padding="3dip" />
+    </TableRow>
+    
+    <TableRow>
+        <TextView
+			android:id="@+id/serverPortLbl"
+			android:text="Server Port:"
+			android:textSize="18sp"
+            android:padding="3dip" />
+        <EditText
+        	android:id="@+id/serverPort"
+        	android:layout_column="1"
+        	android:layout_height="38px"
+        	android:layout_width="fill_parent"
+        	android:gravity="left"
+        	android:numeric="integer"
+			android:text="27015"
+			android:padding="3dip" />
+    </TableRow>
+    
+    <TableRow>
+        <TextView
+			android:id="@+id/rconPassLbl"
+			android:text="Rcon Password:"
+			android:textSize="18sp"
+            android:padding="3dip" />
+        <EditText
+        	android:id="@+id/rconPass"
+        	android:layout_column="1"
+        	android:layout_height="38px"
+        	android:layout_width="fill_parent"
+        	android:gravity="left"
+			android:password="true"
+			android:text=""
+			android:padding="3dip" />
+    </TableRow>-->
+    
+    <Button
+			android:id="@+id/serverSelectButton"
+			android:layout_width="fill_parent"
+			android:layout_height="38px"
+			android:text="Tap to Select Server" />
+    
+    <TableRow>
+        <TextView
+			android:id="@+id/rconCommandLbl"
+			android:text="Cmd:"
+			android:textSize="18sp"
+            android:padding="3dip" />
+        <AutoCompleteTextView
+        	android:id="@+id/rconCommand"
+        	android:layout_height="38px"
+        	android:layout_width="fill_parent"
+        	android:gravity="left"
+			android:text=""
+			android:padding="3dip" />
+    </TableRow>
+    
+    <TableRow>
+    	<TextView
+			android:id="@+id/fillerLbl"
+			android:text=""
+			android:textSize="18sp"
+            android:padding="3dip" />
+        <Button
+			android:id="@+id/sendButton"
+			android:layout_width="fill_parent"
+			android:layout_height="38px"
+			android:text="Send" />
+	</TableRow>
+			
+	<ScrollView android:id="@+id/rconResponseScroll"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" >
+		
+		<TextView
+			android:id="@+id/rconResponse"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:text=""
+			android:singleLine="false" />
+	</ScrollView>
+
+</TableLayout>
