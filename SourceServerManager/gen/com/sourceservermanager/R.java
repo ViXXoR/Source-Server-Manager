@@ -33,16 +33,20 @@ public final class R {
         public static final int serverPort=0x7f050007;
         public static final int serverPortLbl=0x7f050006;
         public static final int serverSelectButton=0x7f05000c;
-        public static final int widget0=0x7f050013;
     }
     public static final class layout {
         public static final int add_server=0x7f030000;
         public static final int edit_server=0x7f030001;
         public static final int main=0x7f030002;
-        public static final int mainorig=0x7f030003;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int addServerTitle=0x7f040002;
+        public static final int app_name=0x7f040000;
+        public static final int chooseServerTitle=0x7f040003;
+        public static final int editServerTitle=0x7f040004;
+        public static final int failedRcon=0x7f040006;
+        public static final int noServerMsg=0x7f040007;
+        public static final int removeServerTitle=0x7f040005;
+        public static final int serverSelectText=0x7f040001;
     }
 }

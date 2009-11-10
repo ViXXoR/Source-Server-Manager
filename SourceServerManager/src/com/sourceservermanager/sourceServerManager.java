@@ -1,3 +1,22 @@
+/**
+	Source Server Manager.
+    Copyright (C) 2009  Matthew Livingstone
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    I also ask that should you use this code, you give credit where credit is due.
+ **/
 package com.sourceservermanager;
 
 import android.app.Activity;
@@ -298,7 +317,7 @@ public class sourceServerManager extends Activity {
       if ( currentName != null )
       {
     	  final Button serverSelectButton = (Button) findViewById(R.id.serverSelectButton);
-    	  serverSelectButton.setText(currentName + " -- Tap to change");
+    	  serverSelectButton.setText(currentName + getString(R.string.serverSelectText));
       }
       
       // Restore all the response text from the server
@@ -417,7 +436,7 @@ public class sourceServerManager extends Activity {
       View view = li.inflate(R.layout.add_server, null);
 
       winAlert = new AlertDialog.Builder(this).setIcon(R.drawable.icon)
-              .setTitle("Add Server")
+              .setTitle(getString(R.string.addServerTitle))
               .setPositiveButton("Add", addListener)
               .setNegativeButton("Cancel", cancelListener)
               .setView(view);
@@ -478,7 +497,7 @@ public class sourceServerManager extends Activity {
 
     	  // Allow the user to choose a server from the list
     	  AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	  builder.setTitle("Choose Server");
+    	  builder.setTitle(getString(R.string.chooseServerTitle));
     	  builder.setSingleChoiceItems(serverNames, -1, new DialogInterface.OnClickListener() {
     	      public void onClick(DialogInterface dialog, int item) {
     	    	  editServerNumber = item;
@@ -557,7 +576,7 @@ public class sourceServerManager extends Activity {
       View view = li.inflate(R.layout.edit_server, null);
 
       winAlert = new AlertDialog.Builder(this).setIcon(R.drawable.icon)
-              .setTitle("Edit Server")
+              .setTitle(getString(R.string.editServerTitle))
               .setPositiveButton("Save", editListener)
               .setNegativeButton("Cancel", cancelListener)
               .setView(view);
@@ -643,7 +662,7 @@ public class sourceServerManager extends Activity {
     	  builder.setSingleChoiceItems(serverNames, -1, new DialogInterface.OnClickListener() {
     	      public void onClick(DialogInterface dialog, int item) {
     	    	  final Button serverSelectButton = (Button) findViewById(R.id.serverSelectButton);
-    	    	  serverSelectButton.setText(serverNames[item] + " -- Tap to change");
+    	    	  serverSelectButton.setText(serverNames[item] + getString(R.string.serverSelectText));
     	    	  currentName = serverNames[item];
     	          currentIP = serverIPs[item];
     	          currentPort = serverPorts[item];
@@ -678,7 +697,7 @@ public class sourceServerManager extends Activity {
     	  generateServerList(serverNames, serverIPs, serverPorts, rconPasses);
     	  
     	  AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	  builder.setTitle("Choose Server to Remove");
+    	  builder.setTitle(getString(R.string.removeServerTitle));
     	  builder.setSingleChoiceItems(serverIPs, -1, new DialogInterface.OnClickListener() {
     	      public void onClick(DialogInterface dialog, int item) {
     	    	  SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -760,7 +779,7 @@ public class sourceServerManager extends Activity {
 	  } catch (Exception e)
 	  {
 		  // Might want to get some more detailed error reports...
-		  rconRepsonseText.append("Failed to send Rcon command.\n");
+		  rconRepsonseText.append(getString(R.string.failedRcon));
 		  rconRepsonseScroll.scrollTo(0, rconRepsonseText.getHeight());
 		  return false;
 	  }
@@ -770,9 +789,8 @@ public class sourceServerManager extends Activity {
   public void showEmptyListDialog()
   {
 	  new AlertDialog.Builder(sourceServerManager.this)
-      .setTitle("Source Server Manager")
-      .setMessage("It appears that you do not currently have any servers to choose from, " +
-      		"please add your server details by selecting \"Add Server\" from the menu.")
+      .setTitle( getString(R.string.app_name) )
+      .setMessage( getString(R.string.noServerMsg) )
       .setNeutralButton("Close", new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int whichButton)
               {

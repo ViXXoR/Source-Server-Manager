@@ -3,56 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:stretchColumns="1">
-
-    <!--<TableRow>
-        <TextView
-			android:id="@+id/serverIPLbl"
-			android:text="Server IP:"
-			android:textSize="18sp"
-            android:padding="3dip" />
-        <EditText
-        	android:id="@+id/serverIP"
-        	android:layout_column="1"
-        	android:layout_height="38px"
-        	android:layout_width="fill_parent"
-        	android:gravity="left"
-			android:text=""
-			android:padding="3dip" />
-    </TableRow>
-    
-    <TableRow>
-        <TextView
-			android:id="@+id/serverPortLbl"
-			android:text="Server Port:"
-			android:textSize="18sp"
-            android:padding="3dip" />
-        <EditText
-        	android:id="@+id/serverPort"
-        	android:layout_column="1"
-        	android:layout_height="38px"
-        	android:layout_width="fill_parent"
-        	android:gravity="left"
-        	android:numeric="integer"
-			android:text="27015"
-			android:padding="3dip" />
-    </TableRow>
-    
-    <TableRow>
-        <TextView
-			android:id="@+id/rconPassLbl"
-			android:text="Rcon Password:"
-			android:textSize="18sp"
-            android:padding="3dip" />
-        <EditText
-        	android:id="@+id/rconPass"
-        	android:layout_column="1"
-        	android:layout_height="38px"
-        	android:layout_width="fill_parent"
-        	android:gravity="left"
-			android:password="true"
-			android:text=""
-			android:padding="3dip" />
-    </TableRow>-->
     
     <Button
 			android:id="@+id/serverSelectButton"
