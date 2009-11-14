@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.InputType;
 import android.text.method.NumberKeyListener;
 import android.view.KeyEvent;
@@ -55,10 +56,27 @@ public class sourceServerManager extends Activity {
   public String currentIP;
   public int currentPort;
   public String currentRconPass;
+  public String serverResponse;
   public int editServerNumber;
   public boolean addingServer = false;
   public boolean editingServer = false;
   public boolean removingServer = false;
+  
+  //Need handler for callbacks to the UI thread
+  final Handler mHandler = new Handler();
+
+  // Create runnable for posting server response from thread
+  final Runnable mUpdateResults = new Runnable() {
+      public void run() {
+         final TextView rconRepsonseText = (TextView) findViewById(R.id.rconResponse);
+         final ScrollView rconRepsonseScroll = (ScrollView) findViewById(R.id.rconResponseScroll);
+         
+         rconRepsonseText.append( serverResponse );
+         // Force scroll to scroll to the bottom
+		 rconRepsonseScroll.scrollTo(0, rconRepsonseText.getHeight());
+      }
+  };
+  
   
   /** Called when the activity is first created. **/
   @Override
@@ -254,7 +272,7 @@ public class sourceServerManager extends Activity {
       {
           public void onClick(View v)
           {
-        	  sendRconRequest();
+        	  threadRconRequest();
           }
       });
       
@@ -275,7 +293,8 @@ public class sourceServerManager extends Activity {
           {
               if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) 
               {
-            	  return sendRconRequest();
+            	  //return sendRconRequest();
+            	  return threadRconRequest();
               }
               return false;
           }
@@ -629,6 +648,14 @@ public class sourceServerManager extends Activity {
       return;
   }
   
+  /**
+   * Generate a list of servers from the saved preferences.
+   *
+   * @param serverNames     Empty array of length serverCount that will be filled with server names.
+   * @param serverIPs      	Empty array of length serverCount that will be filled with server ip addresses.
+   * @param serverPorts  	Empty array of length serverCount that will be filled with server ports.
+   * @param rconPasses   	Empty array of length serverCount that will be filled with RCON passwords.
+   **/
   public void generateServerList(String[] serverNames, String[] serverIPs, int[] serverPorts, String[] rconPasses)
   {
 	  SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -698,7 +725,7 @@ public class sourceServerManager extends Activity {
     	  
     	  AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	  builder.setTitle(getString(R.string.removeServerTitle));
-    	  builder.setSingleChoiceItems(serverIPs, -1, new DialogInterface.OnClickListener() {
+    	  builder.setSingleChoiceItems(serverNames, -1, new DialogInterface.OnClickListener() {
     	      public void onClick(DialogInterface dialog, int item) {
     	    	  SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
             	  SharedPreferences.Editor editor = settings.edit();
@@ -752,36 +779,32 @@ public class sourceServerManager extends Activity {
 	  return false;
   }
   
+  protected boolean threadRconRequest() {
+	  final AutoCompleteTextView rconCommandText = (AutoCompleteTextView) findViewById(R.id.rconCommand);
+
+      // Fire off a thread to do some work that we shouldn't do directly in the UI thread
+      Thread t = new Thread() {
+          public void run() {
+              sendRconRequest( rconCommandText.getText().toString() );
+              mHandler.post(mUpdateResults);
+          }
+      };
+      t.start();
+      return true;
+  }
+  
   /** Send the request to the server **/
-  public boolean sendRconRequest()
-  {
-      final AutoCompleteTextView rconCommandText = (AutoCompleteTextView) findViewById(R.id.rconCommand);
-      final TextView rconRepsonseText = (TextView) findViewById(R.id.rconResponse);
-      final ScrollView rconRepsonseScroll = (ScrollView) findViewById(R.id.rconResponseScroll);
-      
+  public void sendRconRequest(String command)
+  {      
       try
-	  {
-		  String stringShow = null;
-		  //int localPort = -1; // Used in HL1 servers
-		  String ipStr = currentIP;
-		  int port = currentPort;
-		  String password = currentRconPass;
-		  String command = rconCommandText.getText().toString();
-		  
+	  {		  
 		  // Call Source (Half Life 2 & others) rcon without local port
-		  stringShow = SourceRcon.send(ipStr, port, password, command);
-		  rconRepsonseText.append(stringShow);
-		  // Force scrollView to scroll to the bottom
-		  rconRepsonseScroll.scrollTo(0, rconRepsonseText.getHeight());
-		  
-		  return true;
+		  serverResponse = SourceRcon.send(currentIP, currentPort, currentRconPass, command);
 		  
 	  } catch (Exception e)
 	  {
 		  // Might want to get some more detailed error reports...
-		  rconRepsonseText.append(getString(R.string.failedRcon));
-		  rconRepsonseScroll.scrollTo(0, rconRepsonseText.getHeight());
-		  return false;
+		  serverResponse = getString(R.string.failedRcon);
 	  }
   }
   
