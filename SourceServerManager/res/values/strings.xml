@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Source Server Manager</string>
-    <string name="serverSelectText"> -- Tap to change</string>
+    <string name="serverSelectText">-- Tap to change</string>
     <string name="addServerTitle">Add Server</string>
     <string name="chooseServerTitle">Choose Server</string>
     <string name="editServerTitle">Edit Server</string>
     <string name="removeServerTitle">Choose Server to Remove</string>
     
     <string name="failedRcon">Failed to send RCON command.\n</string>
+    <string name="emptyRcon">RCON response empty (sent successfully).\n</string>
     <string name="noServerMsg">It appears that you do not currently have any servers to choose from, please add your server details by selecting \"Add Server\" from the menu.</string>
+    <string name="helpMsg">--Add a Server--\n
+    Press \"Menu\" from the main screen, and select \"Add Server\"\n\n
+    --Useful commands--\n
+    status : Display server and player information\n
+    kick \"name\" : Kick player with corresponding name\n
+    kickid \"steamid\" : Kick player with corresponding steamID\n\n
+    
+    For additional help or feature requests, email iamvixxor@gmail.com</string>
 </resources>

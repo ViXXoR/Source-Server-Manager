@@ -1,7 +1,7 @@
 package com.sourceservermanager.rcon.exception;
 
 /**
- * This exception will be throwed whenever the server don't send a response to our command
+ * This exception will be thrown whenever the server don't send a response to our command
  */
 
 public class ResponseEmpty extends Exception {

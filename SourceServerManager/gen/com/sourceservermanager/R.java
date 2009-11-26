@@ -44,8 +44,10 @@ public final class R {
         public static final int app_name=0x7f040000;
         public static final int chooseServerTitle=0x7f040003;
         public static final int editServerTitle=0x7f040004;
+        public static final int emptyRcon=0x7f040007;
         public static final int failedRcon=0x7f040006;
-        public static final int noServerMsg=0x7f040007;
+        public static final int helpMsg=0x7f040009;
+        public static final int noServerMsg=0x7f040008;
         public static final int removeServerTitle=0x7f040005;
         public static final int serverSelectText=0x7f040001;
     }

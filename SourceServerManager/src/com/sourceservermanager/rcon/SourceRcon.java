@@ -63,7 +63,6 @@ public class SourceRcon {
 
             rconSocket = new Socket();
 
-            //InetAddress addr = InetAddress.getLocalHost();
             // getLocalIpAddress() will get IP regardless of WiFi or 3G
             InetAddress addr = InetAddress.getByName(getLocalIpAddress());
             byte[] ipAddr = addr.getAddress();
@@ -95,11 +94,8 @@ public class SourceRcon {
         } catch (SocketTimeoutException timeout) {
             throw timeout;
         } catch (UnknownHostException e) {
-            //System.err.println("UnknownHostException: " + e.getCause());
             return "UnknownHostException: " + e.getCause();
         } catch (IOException e) {
-            //System.err.println("Couldn't get I/O for the connection: "+ e.getCause());
-            //Toast.makeText(SourceRcon.this, stringShow, Toast.LENGTH_LONG).show();
         	return "Couldn't get I/O for the connection: "+ e.getCause();
         }
 
@@ -119,8 +115,7 @@ public class SourceRcon {
 	            }
 	        }
 	    } catch (SocketException ex) {
-	        //Log.e(LOG_TAG, ex.toString());
-	    	//Toast.makeText(sourceServerManager.this, ex.toString(), Toast.LENGTH_LONG).show();
+	        // Just going to return null anyways
 	    }
 	    return null;
 	}
@@ -151,7 +146,7 @@ public class SourceRcon {
             // Timeout while connecting to the server
             throw timeout;
         } catch (Exception e2) {
-            System.err.println("I/O error on socket\n");
+            //System.err.println("I/O error on socket\n");
         }
         return null;
     }
