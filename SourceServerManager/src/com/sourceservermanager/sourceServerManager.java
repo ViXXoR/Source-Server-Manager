@@ -19,6 +19,9 @@
  **/
 package com.sourceservermanager;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -44,6 +47,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sourceservermanager.rcon.SourceRcon;
+import com.sourceservermanager.rcon.Rcon;
+import com.sourceservermanager.rcon.exception.BadRcon;
 import com.sourceservermanager.rcon.exception.ResponseEmpty;
 
 public class sourceServerManager extends Activity {
@@ -366,8 +371,7 @@ public class sourceServerManager extends Activity {
 				"writeip" };
 
 		// Grab serverCount preferences
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME,
-				MODE_PRIVATE);
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
 		serverCount = settings.getInt("serverCount", 0);
 
@@ -483,15 +487,15 @@ public class sourceServerManager extends Activity {
 
 	/** Creates the menu items **/
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_ADD_SERVER, 0, "Add Server").setIcon(
+		menu.add(0, MENU_ADD_SERVER, 0, getString(R.string.addServerTitle)).setIcon(
 				android.R.drawable.ic_menu_add);
-		menu.add(0, MENU_EDIT_SERVER, 0, "Edit Server").setIcon(
+		menu.add(0, MENU_EDIT_SERVER, 0, getString(R.string.editServerTitle)).setIcon(
 				android.R.drawable.ic_menu_edit);
-		menu.add(0, MENU_REMOVE_SERVER, 0, "Remove Server").setIcon(
+		menu.add(0, MENU_REMOVE_SERVER, 0, getString(R.string.removeServerText)).setIcon(
 				android.R.drawable.ic_menu_delete);
-		menu.add(0, MENU_HELP, 0, "Help").setIcon(
+		menu.add(0, MENU_HELP, 0, getString(R.string.helpText)).setIcon(
 				android.R.drawable.ic_menu_help);
-		menu.add(0, MENU_QUIT, 0, "Quit").setIcon(
+		menu.add(0, MENU_QUIT, 0, getString(R.string.quitText)).setIcon(
 				android.R.drawable.ic_menu_close_clear_cancel);
 		return true;
 	}
@@ -586,8 +590,8 @@ public class sourceServerManager extends Activity {
 
 		winAlert = new AlertDialog.Builder(this).setIcon(R.drawable.icon)
 				.setTitle(getString(R.string.addServerTitle))
-				.setPositiveButton("Add", addListener).setNegativeButton(
-						"Cancel", cancelListener).setView(view);
+				.setPositiveButton(getString(R.string.addText), addListener).setNegativeButton(
+						getString(R.string.cancelText), cancelListener).setView(view);
 
 		// Ensure that we do not show the dialog if we rotate the screen
 		// after pushing the back button
@@ -733,8 +737,8 @@ public class sourceServerManager extends Activity {
 
 		winAlert = new AlertDialog.Builder(this).setIcon(R.drawable.icon)
 				.setTitle(getString(R.string.editServerTitle))
-				.setPositiveButton("Save", editListener).setNegativeButton(
-						"Cancel", cancelListener).setView(view);
+				.setPositiveButton(getString(R.string.saveText), editListener).setNegativeButton(
+						getString(R.string.cancelText), cancelListener).setView(view);
 
 		// Ensure that we do not show the dialog if we rotate the screen
 		// after pushing the back button
@@ -831,7 +835,7 @@ public class sourceServerManager extends Activity {
 
 			// Allow the user to choose a server
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Choose Server");
+			builder.setTitle(getString(R.string.chooseServerTitle));
 			builder.setSingleChoiceItems(serverNames, -1,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int item) {
@@ -947,13 +951,31 @@ public class sourceServerManager extends Activity {
 	public void sendRconRequest(String command) {
 		try {
 			// Call Source (Half Life 2 & others) rcon without local port
-			serverResponse = SourceRcon.send(currentIP, currentPort,
-					currentRconPass, command);
+			serverResponse = SourceRcon.send(currentIP, currentPort, currentRconPass, command);
 
 		} catch (ResponseEmpty e) {
 			serverResponse = getString(R.string.emptyRcon);
+		} catch (BadRcon e) {
+			// Wrong RCON password
+			serverResponse = getString(R.string.badRcon);
+		} catch (IOException e) {
+			// The socket timed out on HL2 style, try HL1! (inefficient, I know, but I don't want to add anything to server prefs now)
+			try {
+				// Call HL1 rcon with local port 0
+				serverResponse = Rcon.send(0, currentIP, currentPort, currentRconPass, command);
+			} catch (ResponseEmpty e2) {
+				serverResponse = getString(R.string.emptyRcon);
+			} catch (SocketTimeoutException e2) {
+				serverResponse = getString(R.string.socketTimeout);
+			} catch (BadRcon e2) {
+				// Wrong RCON password
+				serverResponse = getString(R.string.badRcon);
+			} catch (Exception e2) {
+				// Something else happened...
+				serverResponse = getString(R.string.failedRcon);
+			}
 		} catch (Exception e) {
-			// Might want to get some more detailed error reports...
+			// Something else happened...
 			serverResponse = getString(R.string.failedRcon);
 		}
 	}
@@ -965,7 +987,7 @@ public class sourceServerManager extends Activity {
 	public void showEmptyListDialog() {
 		new AlertDialog.Builder(sourceServerManager.this).setTitle(
 				getString(R.string.app_name)).setMessage(
-				getString(R.string.noServerMsg)).setNeutralButton("Close",
+				getString(R.string.noServerMsg)).setNeutralButton(getString(R.string.closeText),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						dialog.cancel();
@@ -980,7 +1002,7 @@ public class sourceServerManager extends Activity {
 		STATE_VIEW_HELP = true;
 		new AlertDialog.Builder(sourceServerManager.this).setTitle(
 				getString(R.string.app_name)).setMessage(
-				getString(R.string.helpMsg)).setNeutralButton("Close",
+				getString(R.string.helpMsg)).setNeutralButton(getString(R.string.closeText),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						STATE_VIEW_HELP = false;

@@ -14,7 +14,7 @@
     <TableRow>
         <TextView
 			android:id="@+id/serverNameLbl"
-			android:text="Name:"
+			android:text="@string/nameLblText"
 			android:textSize="18sp"
             android:padding="3dip" />
         <EditText
@@ -30,7 +30,7 @@
     <TableRow>
         <TextView
 			android:id="@+id/serverIPLbl"
-			android:text="Server IP:"
+			android:text="@string/serverIPLblText"
 			android:textSize="18sp"
             android:padding="3dip" />
         <EditText
@@ -46,7 +46,7 @@
     <TableRow>
         <TextView
 			android:id="@+id/serverPortLbl"
-			android:text="Server Port:"
+			android:text="@string/serverPortLblText"
 			android:textSize="18sp"
             android:padding="3dip" />
         <EditText
@@ -63,7 +63,7 @@
     <TableRow>
         <TextView
 			android:id="@+id/rconPassLbl"
-			android:text="Rcon Password:"
+			android:text="@string/rconLblText"
 			android:textSize="18sp"
             android:padding="3dip" />
         <EditText

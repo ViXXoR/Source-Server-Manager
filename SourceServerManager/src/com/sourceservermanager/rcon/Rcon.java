@@ -1,9 +1,12 @@
 package com.sourceservermanager.rcon;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import com.sourceservermanager.rcon.exception.BadRcon;
@@ -29,6 +32,10 @@ public abstract class Rcon {
 
     private static final int RESPONSE_TIMEOUT = 2000;
     private static final int MULTIPLE_PACKETS_TIMEOUT = 300;
+    
+    static Socket rconSocket;
+    static InputStream in = null;
+    static OutputStream out = null;
 
     /**
      * Send the RCON request.  Sends the command to the game server.  A port
@@ -87,10 +94,11 @@ public abstract class Rcon {
             int packetSize = 1400;
 
             InetAddress address = InetAddress.getByName(ipStr);
+            //InetAddress address = InetAddress.getByName(getLocalIpAddress());
             byte[] ip = address.getAddress();
             InetAddress inet = InetAddress.getByAddress(ip);
             String msg = "challenge rcon\n";
-
+            
             DatagramPacket out = getDatagramPacket(msg, inet, port);
             socket.send(out);
 
@@ -170,7 +178,6 @@ public abstract class Rcon {
         }
         return resp;
     }
-
 }
 
 class RconPacket {

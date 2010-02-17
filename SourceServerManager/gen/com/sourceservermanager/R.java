@@ -41,14 +41,30 @@ public final class R {
     }
     public static final class string {
         public static final int addServerTitle=0x7f040002;
+        public static final int addText=0x7f040009;
         public static final int app_name=0x7f040000;
+        public static final int badRcon=0x7f040016;
+        public static final int cancelText=0x7f04000a;
         public static final int chooseServerTitle=0x7f040003;
+        public static final int closeText=0x7f040007;
+        public static final int cmdLblText=0x7f04000d;
         public static final int editServerTitle=0x7f040004;
-        public static final int emptyRcon=0x7f040007;
-        public static final int failedRcon=0x7f040006;
-        public static final int helpMsg=0x7f040009;
-        public static final int noServerMsg=0x7f040008;
+        public static final int emptyRcon=0x7f040015;
+        public static final int failedRcon=0x7f040014;
+        public static final int helpMsg=0x7f040019;
+        public static final int helpText=0x7f04000b;
+        public static final int nameLblText=0x7f04000e;
+        public static final int noServerMsg=0x7f040018;
+        public static final int quitText=0x7f04000c;
+        public static final int rconLblText=0x7f040011;
+        public static final int removeServerText=0x7f040006;
         public static final int removeServerTitle=0x7f040005;
+        public static final int saveText=0x7f040008;
+        public static final int sendText=0x7f040013;
+        public static final int serverIPLblText=0x7f04000f;
+        public static final int serverPortLblText=0x7f040010;
         public static final int serverSelectText=0x7f040001;
+        public static final int socketTimeout=0x7f040017;
+        public static final int tapToSelectText=0x7f040012;
     }
 }

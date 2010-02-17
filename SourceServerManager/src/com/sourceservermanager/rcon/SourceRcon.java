@@ -205,7 +205,14 @@ public class SourceRcon {
 
         for (int i = 0; i < packets.length; i++) {
             if (packets[i] != null) {
-                response = response.concat(new String(packets[i].array(), 12, packets[i].position()-14));
+            	//String resp = new String(packets[i].array(), 12, packets[i].position()-14);
+            	//if (resp != null)
+            	//{
+            		response = response.concat(new String(packets[i].array(), 12, packets[i].position()-14));
+            	//} else
+            	//{
+            		//response = response.concat("NULL");
+            	//}
             }
         }
         return response;

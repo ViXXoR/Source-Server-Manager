@@ -8,12 +8,12 @@
 			android:id="@+id/serverSelectButton"
 			android:layout_width="fill_parent"
 			android:layout_height="38px"
-			android:text="Tap to Select Server" />
+			android:text="@string/tapToSelectText" />
     
     <TableRow>
         <TextView
 			android:id="@+id/rconCommandLbl"
-			android:text="Cmd:"
+			android:text="@string/cmdLblText"
 			android:textSize="18sp"
             android:padding="3dip" />
         <AutoCompleteTextView
@@ -35,7 +35,7 @@
 			android:id="@+id/sendButton"
 			android:layout_width="fill_parent"
 			android:layout_height="38px"
-			android:text="Send" />
+			android:text="@string/sendText" />
 	</TableRow>
 			
 	<ScrollView android:id="@+id/rconResponseScroll"
